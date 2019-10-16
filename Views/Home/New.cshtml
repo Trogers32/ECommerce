@@ -1,0 +1,32 @@
+<div class="row">
+    <h2 class="col-8">Dojo Activity Center</h2>
+    <a href="/home" class="col-2 text-right">Home</a>
+    <a href="/logout" class="col-2 text-right">Log Out</a>
+</div>
+<div class="row">
+    <h3 class="pl-4">Create an Activity</h3>
+</div>
+@model Activitee
+<form asp-action="CreateActivity" asp-controller="Home" method="post" class="mx-auto w-75">
+    <div class="row">
+        <label class="col-2" asp-for="ActivityTitle">Activity Title:</label>
+        <input class="col-4" asp-for="ActivityTitle">
+    </div>
+    <div class="row">
+        <label class="col-2" asp-for="ActivityDate">Activity Date:</label>
+        <input class="col-4" asp-for="ActivityDate">
+        <label class="col-2" asp-for="ActivityDuration">Duration: </label>
+        <input class="col-2" asp-for="ActivityDuration">
+        <select class="col-2" asp-for="ActivityTimeType">
+            <option value="Hours" selected>Hours</option>
+            <option value="Minutes">Minutes</option>
+            <option value="Days">Days</option>
+        </select>
+    </div>
+    <div class="row">
+        <label class="col-2" asp-for="ActivityDescription">Description: </label>
+        <textarea class="col-10" asp-for="ActivityDescription"></textarea>
+    </div>
+    <input class="float-right" value="Create" type="submit">    
+</form>
+<div asp-validation-summary="All" class="mx-auto w-50 text-danger"></div>

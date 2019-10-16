@@ -1,0 +1,35 @@
+<div class="row">
+    <h2 class="col-8">Dojo Activity Center</h2>
+    <a href="/home" class="col-2 text-right">Home</a>
+    <a href="/logout" class="col-2 text-right">Log Out</a>
+</div>
+@model List<Activitee>
+<div class="w-75 mx-auto">
+    <div class="row">
+        <h2 class="col-11">@ViewBag.Activity.ActivityTitle</h2>
+        @foreach(var i in Model){
+            @if(i.Coordinator == ViewBag.User.FName){
+                <td><a href="/delete/@i.ActivityId">Delete</a></td>
+            } else if(i.Users.Any(a=>a.UserId == ViewBag.User.UserId)){
+                <td><a href="/leave/@i.ActivityId/@ViewBag.User.UserId">Leave</a></td>
+            } else {
+                <td><a href="/join/@i.ActivityId">Join</a></td>
+            }
+        }
+    </div>
+    <div class="">
+        <h4>Event Coordinator: @ViewBag.Activity.Coordinator</h4>
+    </div>
+    <div class="">
+        <h4 class="d-block">Description:</h4>
+        <div class="w-75 mx-auto">@ViewBag.Activity.ActivityDescription</div>
+    </div>
+    <div class="">
+        <h4 class="d-block">Participants:</h4>
+        <ul class="w-75 mx-auto">
+            @foreach(var i in ViewBag.Guests){
+                <li>@i.FName</li>
+            }
+        </ul>
+    </div>
+</div>

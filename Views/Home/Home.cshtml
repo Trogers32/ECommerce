@@ -1,0 +1,46 @@
+<div class="row">
+    <h2 class="col-6">Dojo Activity Center</h2>
+    <h5 class="col-4 text-right">Welcome, @ViewBag.User.FName!</h5>
+    <a href="/logout" class="col-2 text-right">Log Out</a>
+</div>
+@model List<Activitee>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Activity</th>
+            <th scope="col">Date and Time</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Event coordinator</th>
+            <th scope="col">No. of Participants</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var i in Model){
+            if(i.ActivityDate > DateTime.Now){
+                <tr>
+                    <td><a href="/activity/@i.ActivityId">@i.ActivityTitle</a></td>
+                    @if(i.ActivityDate.Hour >= 12){
+                        <td>@i.ActivityDate.ToShortDateString() @@ @i.ActivityDate.ToString("hh:mm") PM</td>
+                    } else {
+                        <td>@i.ActivityDate.ToShortDateString() @@ @i.ActivityDate.ToString("hh:mm") AM</td>
+                    }
+                    <td>@i.ActivityDuration @i.ActivityTimeType</td>
+                    <td>@i.Coordinator</td>
+                    <td>@i.GuestCount</td>
+                    @if(i.Coordinator == ViewBag.User.FName){
+                        <td><a href="/delete/@i.ActivityId">Delete</a></td>
+                    } else if(i.Users.Any(a=>a.UserId == ViewBag.User.UserId)){
+                        <td><a href="/leave/@i.ActivityId/@ViewBag.User.UserId">Leave</a></td>
+                    } else {
+                        <td><a href="/join/@i.ActivityId">Join</a></td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<div class="row text-right">
+    <span class="col-10"></span>
+    <span class="col-2 text-right"><a href="/new" class="btn btn-primary">Add New Activity</a></span>
+</div>
